@@ -1,4 +1,4 @@
-import logo from "../images/logo_placeholder.png" // add school logo to images folder and import here
+import logo from "../images/logo_techelevator.png" // add school logo to images folder and import here
 
 export const applicationsLive = true // set to false if not currently accepting applications
 export const disabledLoanAppFormID = '69140c47-bb03-4a1b-b674-cc136fdea23d' // Hubspot ID for all disabled apply now lead captures
@@ -9,23 +9,23 @@ export const nextCohortStartDate = 'October 29, 2019'
 export const schoolInfo = { // term details section
     interestRate36: '8.99%',
     interestRate60: '10.99%',
-    APRRange36: 'XX.XX - XX.XX%',
-    APRRange60: 'XX.XX - XX.XX%',
+    APRRange36: '11.16%',
+    APRRange60: '12.51%',
     interestOnly: [
         { // for multiple examples of interest only, add items to interestOnly array
-            programName: 'PROGRAM NAME',
-            APR36: 'XX.XX%',
-            financeCharge36: '$X,XXX.XX',
-            IOPayment36: '$XX.XX',
-            FullMonthlyPayment36: '$XXX.XX',
-            APR60: 'XX.XX%',
-            financeCharge60: '$X,XXX.XX',
-            IOPayment60: '$XX.XX',
-            FullMonthlyPayment60: '$XXX.XX',
+            programName: '',
+            APR36: '11.16%',
+            financeCharge36: '$2,293.64',
+            IOPayment36: '$77.91',
+            FullMonthlyPayment36: '$330.67',
+            APR60: '12.51%',
+            financeCharge60: '$4,040.39',
+            IOPayment60: '$95.25',
+            FullMonthlyPayment60: '$226.07',
             LoanExampleAmt: '$10,000',
             LoanExampleOFeeAmt: '$400',
             LoanExampleAmtPlusOFee: '$10,400',
-            programLength: 'X' // program length in months
+            programLength: '3' // program length in months
         }
     ],
     immediateRepayment: [
@@ -45,14 +45,14 @@ export const schoolInfo = { // term details section
 }
 
 export const faq = { // faq section
-    costOfLiving: false, // true if at least one program has cost of living included
+    costOfLiving: true, // true if at least one program has cost of living included
     costOfLivingPrograms: '', // leave as empty string is cost of living availability is the same across all programs
-    multCostOfLivingPrograms: true, // true if costOfLivingPrograms string has more than one program
+    multCostOfLivingPrograms: false, // true if costOfLivingPrograms string has more than one program
     interestOnly: true, // true if interest-only payments are an option
-    immediateRepayment: true, // true if immediate repayment is an option
+    immediateRepayment: false, // true if immediate repayment is an option
     multipleLoanLengths: true, // true if 36 and 60 month options are both available
-    multipleLoanTypes: true, // true if both IR and IO are available
-    multiPrograms: true, // only true if there are multiple programs
+    multipleLoanTypes: false, // true if both IR and IO are available
+    multiPrograms: false, // only true if there are multiple programs
     onlinePrograms: false, // true if at least one program is remote/online
     schoolHQState: 'WA',
     origFee: 0.04,
@@ -60,25 +60,19 @@ export const faq = { // faq section
     // interest payment FAQ info
     interestRate36: '8.99%',
     interestRate60: '10.99%',
-    APR36: 'XX.XX - XX.XX%',
-    APR60: 'XX.XX - XX.XX%',
+    APR36: '11.16%',
+    APR60: '12.51%',
     IOPayment36: '$77.91',
     IOPayment60: '$95.25',
 
     // max loan amounts by program for faq1
     loanRange: [
         {
-            programName: "PROGRAM 1",
-            maxAmount: "the max loan amount",
+            programName: "Tech Elevator's",
+            maxAmount: "$15,500",
             col: true,
-            colAmount: "$6,000"
-        },
-        {
-            programName: "PROGRAM 2",
-            maxAmount: "$10,750",
-            col: false,
-            colAmount: "$6,000"
-        },
+            colAmount: "$4,000"
+        }
     ]
 }
 
@@ -88,33 +82,33 @@ export const faq = { // faq section
 
 export const schoolLogo = logo // go to header.js if height needs adjustment
 
-export const schoolName = "SCHOOL_NAME"
+export const schoolName = "Tech Elevator"
 
-export const schoolURL = 'https://www.SCHOOLWEBSITE.com/' // update with url of school's website
+export const schoolURL = 'https://www.techelevator.com/' // update with url of school's website
 
-export const headline = "Learn to Code at SCHOOL NAME" // update headline as appropriate
+export const headline = "Learn to Code at Tech Elevator" // update headline as appropriate
 
 export const leadContent = {
     header: "Your last step on the path toward changing your career",
-    paragraph: `${schoolName} designs its programs to cover multiple stacks of programming languages to help graduates develop a diverse skill-set. ${schoolName} partners with Skills Fund to offer tuition${faq.costOfLiving ? ' and cost of living' : ''} financing so more students like you can access their program.`
+    paragraph: `${schoolName} offers a 14-week coding bootcamp and career prep program. ${schoolName} partners with Skills Fund to offer tuition${faq.costOfLiving ? ' and cost of living' : ''} financing so more students like you can access their program.`
 }
 
 export const threeStepCardText = {
     step1: "",
     step2: {
         header: "select your program",
-        text: "Choose between the Onsite Bootcamp, Online Full-Time Bootcamp, and Online Part-Time Bootcamp programs."
+        text: "Tech Elevator focuses exclusively on its coding bootcamp."
     },
     step3: `You'll be on your way to an exciting career in tech as part of ${schoolName}'s powerful network.`
 }
 
-export const netlifyFormName = 'SCHOOLNAME_contact'
+export const netlifyFormName = 'techelevator_contact'
 
 export const GATracking = 'UA-68312423-1'
 
-export const hubspotFormId = "HUBSPOT_FORM_ID" // create Hubspot form, get form id after publishing
+export const hubspotFormId = "e9abd424-bcb0-4011-9026-f58b7d41882c" // create Hubspot form, get form id after publishing
 
-export const selectAProgram = "select_a_SCHOOLNAME_program" // update school name to match form field on Hubspot, *** change to "program_name" if only one program ***"
+export const selectAProgram = "program_name" // update school name to match form field on Hubspot, *** change to "program_name" if only one program ***"
 
 // ***** END GENERAL SCHOOL INFO ***** 
 
@@ -131,10 +125,10 @@ export const moreThanSixPrograms = false // set to true if there are 7 or more p
 
 export const programLoanInfo = [ // update with program names and corresponding loan URLs with market segment code from Master Loan Parameters
     {
-        name: "Program 1",
-        url: "https://sf.privateloan.studentloan.org/external/LoanApplication.do?lenderCode=LENDERCODE1",
+        name: "Tech Elevator Program",
+        url: "https://sf.privateloan.studentloan.org/external/LoanApplication.do?lenderCode=SFTE17A",
         loanInfo: { // match loanInfo in first metro below
-            maxLoanAmt: 19495,
+            maxLoanAmt: 19500,
             loanTerm36: true,
             loanTerm60: true,
             '0': { // interest-only 
@@ -145,14 +139,14 @@ export const programLoanInfo = [ // update with program names and corresponding 
             '1': null // immediate repayment
         },
         defaultLoanType: "0", // leave at 0 for interest-only, set to 1 for immediate repayment
-        showMetros: true, // true if there are multiple metros with different tuition amounts for the same program
+        showMetros: false, // true if there are multiple metros with different tuition amounts for the same program
         showLoanTypes: false, // true if both IR and IO are available
         locations: ["Metro 1", "Metro 2", "Metro 3"],
         metros: [ // list in same order as locations array above
           {
             location: "Metro 1",
             loanInfo: { // // match loanInfo to Program 1 above
-              maxLoanAmt: 19495,
+              maxLoanAmt: 19500,
               loanTerm36: true,
               loanTerm60: true,
               '0': { 
@@ -320,7 +314,7 @@ export const programLoanInfo = [ // update with program names and corresponding 
 ]
 
 // ***** BEGIN LOAN CALC TEXT INFO *****
-export const programMaxText = "Choose the loan amount that works best for you. Borrow up to your metro's max (see table below) for the PROGRAM 1, up to $14,995 for the PROGRAM 2 Bootcamp tuition, and up to $9,995 for the PROGRAM 3 Bootcamp tuition."
+export const programMaxText = "Choose the loan amount that works best for you. Borrow up to $19,500 for Tech Elevator's Program."
 
 export const paymentTable = {
     headers: ["Program", "Tuition", "Cost of Living", "Max Total"],
