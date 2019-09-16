@@ -122,7 +122,7 @@ const LoanApp = React.forwardRef((props, ref) => {
 
     const trackGoogleAnalyticsEvent = () => {
             ReactGA.event({
-                category: `Apply Now Button | ${schoolName}`,
+                category: `Apply Now Button`,
                 action: 'click',
                 label: 'submitted loan application'
             })
