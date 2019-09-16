@@ -86,6 +86,8 @@ export const schoolName = "Tech Elevator"
 
 export const schoolURL = 'https://www.techelevator.com/' // update with url of school's website
 
+export const skfURL = 'https://techelevator.skills.fund/' // update with url of school's website
+
 export const headline = "Learn to Code at Tech Elevator" // update headline as appropriate
 
 export const leadContent = {
