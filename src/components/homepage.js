@@ -9,6 +9,7 @@ import ThreeSteps from '../components/threesteps'
 import LoanCalculator from '../components/loancalculator'
 import InfoButtonContainer from '../components/infobuttoncontainer'
 import LoanApp from './loanapp'
+import Reviews from './reviews'
 import DisabledApplication from './disabledApplication'
 import LeadCaptureForm from './leadcaptureform'
 import ApplyFooter from './applyFooter'
@@ -127,6 +128,7 @@ class Homepage extends React.Component {
                 schoolName={this.props.schoolName}
               />
             }
+            <Reviews />
             <LeadCaptureForm 
               IP={this.props.IP}
               pageUri={this.props.pageUri}
