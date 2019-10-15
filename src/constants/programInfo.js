@@ -1,6 +1,6 @@
 import logo from "../images/logo_techelevator.png" // add school logo to images folder and import here
 
-export const applicationsLive = false // set to false if not currently accepting applications
+export const applicationsLive = true // set to false if not currently accepting applications
 export const disabledLoanAppFormID = '69140c47-bb03-4a1b-b674-cc136fdea23d' // Hubspot ID for all disabled apply now lead captures
 export const nextCohortStartDate = 'October 15, 2019'
 
