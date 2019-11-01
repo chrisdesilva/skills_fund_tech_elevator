@@ -68,7 +68,7 @@ export const faq = { // faq section
     // max loan amounts by program for faq1
     loanRange: [
         {
-            programName: "Tech Elevator's",
+            programName: "Tech Elevator's program",
             maxAmount: "$15,500",
             col: true,
             colAmount: "$4,000"
