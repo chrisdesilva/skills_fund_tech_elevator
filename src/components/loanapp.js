@@ -162,7 +162,8 @@ const LoanApp = React.forwardRef((props, ref) => {
     // submit form data to Hubspot, track Google Analytics event, and redirect user to loan application
     const handleSubmit = e => {
         e.preventDefault();
-        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${data.school.hubspotFormId}`
+        const formId = data.school.hubspotFormId
+        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${formId}`
         
         // hsCookie gets the data necessary to track Hubspot analytics
         const hsCookie = document.cookie.split(';').reduce((cookies, cookie) => {
