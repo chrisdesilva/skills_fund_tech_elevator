@@ -26,6 +26,9 @@ const LoanApp = React.forwardRef((props, ref) => {
         }
     `)
 
+    const hubspotFormId = data.school.hubspotFormId
+    const schoolname = data.school.schoolname
+    const selectAProgram = data.school.selectAProgram
     const [email, setEmail] = useState('')
     const thankYouMsg = 'Thanks for applying! Your loan application has opened in a new window.'
     const [submitted, isSubmitted] = useState(false)
@@ -132,10 +135,6 @@ const LoanApp = React.forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        console.log(moreThanSixPrograms)
-    }, [])
-
-    useEffect(() => {
         setLoanUrl(data.school.loanUrLs[activeIndex]['segment'])
         setProgramName(data.school.loanUrLs[activeIndex]['name'])
     }, [activeIndex])
@@ -143,14 +142,6 @@ const LoanApp = React.forwardRef((props, ref) => {
     const redirectLoanApp = () => {
         window.open(loanUrl, "_blank", "noopener noreferrer")
     };
-
-    // const trackGoogleAnalyticsEvent = () => {
-    //         ReactGA.event({
-    //             category: `Apply Now Button | Tech Elevator`,
-    //             action: 'click',
-    //             label: 'submitted loan application'
-    //         })
-    // }
 
     const trackFacebookPixel = () => {
         ReactPixel.track('InitiateCheckout', {
@@ -160,10 +151,9 @@ const LoanApp = React.forwardRef((props, ref) => {
     }
 
     // submit form data to Hubspot, track Google Analytics event, and redirect user to loan application
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const formId = data.school.hubspotFormId
-        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${formId}`
+        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${hubspotFormId}`
         
         // hsCookie gets the data necessary to track Hubspot analytics
         const hsCookie = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -184,12 +174,12 @@ const LoanApp = React.forwardRef((props, ref) => {
             "value": "Student"
             },
             {
-            "name": `${data.school.selectAProgram}`,
+            "name": `${selectAProgram}`,
             "value": `${programName}`
             },
             {
             "name": "school",
-            "value": `${data.school.schoolname}`
+            "value": `${schoolname}`
             },
             {
             "name": "student_loan_application_status",
@@ -203,7 +193,7 @@ const LoanApp = React.forwardRef((props, ref) => {
         "context": {
             "hutk": hsCookie.hubspotutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
             "pageUri": `${props.pageUri}`,
-            "pageName": `${data.school.schoolname} | Skills Fund`,
+            "pageName": `${schoolname} | Skills Fund`,
             "ipAddress": `${props.IP}`
         }
         }
