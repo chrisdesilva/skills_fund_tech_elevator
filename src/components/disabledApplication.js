@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ReactGA from 'react-ga'
 import ReactPixel from 'react-facebook-pixel'
 import marching from '../images/PeopleMarchColor.png'
-import { disabledLoanAppFormID } from '../constants/programInfo'
 
 const DisabledApplication = React.forwardRef((props, ref) => {
 
@@ -33,7 +32,7 @@ const DisabledApplication = React.forwardRef((props, ref) => {
     // submit form data to Hubspot, track Google Analytics event, and redirect user to loan application
     const handleSubmit = e => {
         e.preventDefault();
-        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${disabledLoanAppFormID}`
+        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${props.disabledLoanAppFormID}`
         
         // hsCookie gets the data necessary to track Hubspot analytics
         const hsCookie = document.cookie.split(';').reduce((cookies, cookie) => {

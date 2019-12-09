@@ -1,19 +1,32 @@
 import React from 'react'
 import Button from './button'
-import { applicationsLive, headline, nextCohortStartDate, schoolName } from '../constants/programInfo'
+import { graphql, useStaticQuery } from "gatsby"
 
 const Banner = props => {
+    const data = useStaticQuery(graphql`
+        query {
+            school: contentfulSchool(schoolname: {eq: "Tech Elevator"}) {
+                applicationsLive
+                bannerText {
+                    content {
+                      content {
+                        value
+                      }
+                    }
+                }
+            }
+        }
+    `)
     return (
     <div className='flex flex-col justify-center items-center relative z-0' id='banner'>
         {/* update h2 caps words with school-specific content */}
-        <h1 className='text-3xl lg:text-4xl font-normal text-center mt-8 text-black px-4'>{applicationsLive ? headline : `Applications for ${schoolName}'s next cohort will be available beginning`}</h1>
-        {!applicationsLive && <span className='font-bold mb-6 text-3xl'>{nextCohortStartDate}</span>}
-        {applicationsLive && <h2 className='text-base lg:text-xl font-light text-center text-black'>Know exactly what you'll pay with Skills Fund</h2>}
+        <h1 className='text-3xl lg:text-4xl font-normal text-center mt-8 text-black px-4'>{data.school.bannerText.content[0].content[0].value}</h1>
+        <h2 className='text-base lg:text-xl font-light text-center text-black'>{data.school.bannerText.content[1].content[0].value}</h2>
         <div className='flex flex-col lg:flex-row pb-16'>
             <Button
                 buttonClassName='opacityApply uppercase bg-primary p-3 lg:mb-0 w-40 rounded-full shadow-lg text-white'
                 divClassName='flex justify-center mt-5'
-                text={applicationsLive ? 'apply now' : 'notify me'}
+                text={data.school.applicationsLive ? 'apply now' : 'notify me'}
                 onClick={props.applyNowOnClick}
                 id="bannerApply"
             />

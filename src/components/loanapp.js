@@ -1,35 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import ReactGA from 'react-ga'
+import { graphql, useStaticQuery } from 'gatsby'
+// import ReactGA from 'react-ga'
 import ReactPixel from 'react-facebook-pixel'
 import marching from '../images/PeopleMarchColor.png'
 import { UnmountClosed as Collapse } from 'react-collapse'
-import { faq, hubspotFormId, moreThanSixPrograms, programLoanInfo, schoolName, selectAProgram } from '../constants/programInfo'
+// import { faq, hubspotFormId, moreThanSixPrograms, programLoanInfo, schoolName, selectAProgram } from '../constants/programInfo'
 
 const LoanApp = React.forwardRef((props, ref) => {
+
+    const data = useStaticQuery(graphql`
+        query {
+            school: contentfulSchool(schoolname: {eq: "Tech Elevator"}) {
+                schoolname
+                schoolurl
+                multiPrograms
+                hasOnline
+                costOfLiving
+                hubspotFormId
+                selectAProgram
+                loanUrLs {
+                  name
+                  segment
+                } 
+            }
+        }
+    `)
 
     const [email, setEmail] = useState('')
     const thankYouMsg = 'Thanks for applying! Your loan application has opened in a new window.'
     const [submitted, isSubmitted] = useState(false)
     const [disclaimers, toggleDisclaimers] = useState(false)
-    const [loanUrl, setLoanUrl] = useState(programLoanInfo[0].url)
-    const [programName, setProgramName] = useState(programLoanInfo[0].name)
+    const [loanUrl, setLoanUrl] = useState(data.school.loanUrLs[0].segment)
+    const [programName, setProgramName] = useState(data.school.loanUrLs[0].name)
     const [activeIndex, setActiveIndex] = useState(0) // takes in index of program to execute setActive hook
     const [active, setActive] = useState(null) // sets individual programs as active or inactive to change highlight color
     const activeClass = "menu-item cursor-pointer border-2 rounded border-black text-center py-2 mb-2 bg-primary text-white" 
     const inactiveClass = "menu-item cursor-pointer border-2 rounded border-black text-center py-2 mb-2" 
-    const formName = `${props.schoolName}_apply_now program-apply flex flex-col items-center`
-    const costOfLiving = faq.costOfLiving 
-    const multiplePrograms = faq.multiPrograms 
-    const onlinePrograms = faq.onlinePrograms 
-    const schoolHQState = faq.schoolHQState 
+    const formName = `${data.school.schoolname}_apply_now program-apply flex flex-col items-center`
+    const costOfLiving = data.school.costOfLiving 
+    const multiplePrograms = data.school.multiPrograms 
+    const onlinePrograms = data.school.hasOnline
+    const schoolHQState = 'WA'
+    const moreThanSixPrograms = data.school.loanUrLs.length > 6 ? true : false
 
     const handleChange = e => {
         setEmail(e.target.value)
     }
 
     const toggleIsActive = i => {
-        setLoanUrl(programLoanInfo[i]['url'])
-        setProgramName(programLoanInfo[i]['name'])
+        setLoanUrl(data.school.loanUrLs[i]['segment'])
+        setProgramName(data.school.loanUrLs[i]['name'])
         setActiveIndex(i)
         switch(activeIndex){ // accounts for up to 10 programs
             case 0: 
@@ -112,8 +132,12 @@ const LoanApp = React.forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        setLoanUrl(programLoanInfo[activeIndex]['url'])
-        setProgramName(programLoanInfo[activeIndex]['name'])
+        console.log(moreThanSixPrograms)
+    }, [])
+
+    useEffect(() => {
+        setLoanUrl(data.school.loanUrLs[activeIndex]['segment'])
+        setProgramName(data.school.loanUrLs[activeIndex]['name'])
     }, [activeIndex])
 
     const redirectLoanApp = () => {
@@ -138,7 +162,7 @@ const LoanApp = React.forwardRef((props, ref) => {
     // submit form data to Hubspot, track Google Analytics event, and redirect user to loan application
     const handleSubmit = e => {
         e.preventDefault();
-        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${hubspotFormId}`
+        const url = `https://api.hsforms.com/submissions/v3/integration/submit/3871135/${data.school.hubspotFormId}`
         
         // hsCookie gets the data necessary to track Hubspot analytics
         const hsCookie = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -159,12 +183,12 @@ const LoanApp = React.forwardRef((props, ref) => {
             "value": "Student"
             },
             {
-            "name": `${selectAProgram}`,
+            "name": `${data.school.selectAProgram}`,
             "value": `${programName}`
             },
             {
             "name": "school",
-            "value": `${props.schoolName}`
+            "value": `${data.school.schoolname}`
             },
             {
             "name": "student_loan_application_status",
@@ -178,7 +202,7 @@ const LoanApp = React.forwardRef((props, ref) => {
         "context": {
             "hutk": hsCookie.hubspotutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
             "pageUri": `${props.pageUri}`,
-            "pageName": `${props.schoolName} | Skills Fund`,
+            "pageName": `${data.school.schoolname} | Skills Fund`,
             "ipAddress": `${props.IP}`
         }
         }
@@ -204,7 +228,7 @@ const LoanApp = React.forwardRef((props, ref) => {
             <h2>Loan Application</h2>
             <div className="rounded shadow-2xl pt-8 px-8 mx-4 bg-white">
                 {/* update with school name, remove cost of living if school does not offer it */}
-                <h3 className="text-center font-normal">{props.schoolName} Tuition{costOfLiving && <span> and Cost of Living</span>} Financing</h3>
+                <h3 className="text-center font-normal">{data.school.schoolname} Tuition{data.school.costOfLiving && <span> and Cost of Living</span>} Financing</h3>
                 <div className="flex justify-center">
                     <img className="w-auto" src={marching} alt="People marching and carrying flags" loading="lazy"/>
                 </div>
@@ -214,17 +238,17 @@ const LoanApp = React.forwardRef((props, ref) => {
                 <input className="border-2 rounded border-primary text-center py-2 mb-4 w-64" type="email" name="email" placeholder="Enter your email address" onChange={handleChange} value={email} required />
                 {multiplePrograms && !moreThanSixPrograms && 
                     <div className="w-full lg:w-64 px-8 lg:px-0">
-                        <p className="text-center text-sm">Select a {props.schoolName} program</p>                        
-                        {programLoanInfo.map((program, i) => {
+                        <p className="text-center text-sm">Select a {data.school.schoolname} program</p>                        
+                        {data.school.loanUrLs.map((program, i) => {
                             return <p key={program.name} className={activeIndex === i ? activeClass : inactiveClass} onClick={() => toggleIsActive(i)}>{program.name}</p>
                         })}
                     </div>
                 }
                 {multiplePrograms && moreThanSixPrograms && 
                     <div className="w-full lg:w-64 px-8 lg:px-0">
-                        <p className="text-center text-sm">Select your {props.schoolName} program</p>                        
+                        <p className="text-center text-sm">Select your {data.school.schoolname} program</p>                        
                         <select id="programSelect" className="border-2 border-primary mb-5 bg-white text-primary text-center w-full" onChange={toggleIsActiveDropdown}>
-                            {programLoanInfo.map((program, i) => {
+                            {data.school.loanUrLs.map((program, i) => {
                                 return <option key={program.name} value={i}>{program.name}</option>
                             })}
                         </select>
@@ -232,8 +256,8 @@ const LoanApp = React.forwardRef((props, ref) => {
                 }
                 <div className="hidden">
                     <input type="text" name="Stakeholder Type" value="Student" readOnly/>
-                    <input type="text" name="Program Name" value={programLoanInfo.programName} readOnly/>
-                    <input type="text" name="School" value={props.schoolName} readOnly/>
+                    <input type="text" name="Program Name" value={programName} readOnly/>
+                    <input type="text" name="School" value={data.school.schoolName} readOnly/>
                     <input type="text" name="Student Loan Application Status" value="BLA Click Email Submitted" readOnly/>
                     <input type="text" name="Clicked Begin Loan Application BLA" value="BLA Click" readOnly/>
                 </div>
