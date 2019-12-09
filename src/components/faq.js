@@ -1,11 +1,45 @@
 import React, { useState } from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import { FaAngleDown } from 'react-icons/fa'
 import { UnmountClosed as Collapse } from 'react-collapse'
-import { faq, schoolName } from '../constants/programInfo'
-
 
 // update with school-specific info
 const FAQ = () => {
+
+     const data = useStaticQuery(graphql`
+          query {
+               school: contentfulSchool(schoolname: {eq: "Tech Elevator"}) {
+                    schoolname
+                    faqs {
+                         APR36
+                         APR60
+                         IOPayment36
+                         IOPayment60
+                         costOfLiving
+                         costOfLivingPrograms
+                         immediateRepayment
+                         interestOnly
+                         interestRate36
+                         interestRate60
+                         loanRange {
+                           col
+                           colAmount
+                           maxAmount
+                           programName
+                         }
+                         multCostOfLivingPrograms
+                         multiPrograms
+                         multipleLoanLengths
+                         multipleLoanTypes
+                         onlinePrograms
+                         origFee
+                         schoolHQState
+                    }
+               }
+          }
+     `)
+
+     const faqs = data.school.faqs
 
      const [q1, showq1] = useState(false)
      const [q2, showq2] = useState(false)
@@ -25,23 +59,23 @@ const FAQ = () => {
           
           <div onClick={() => showq1(!q1)}><h3 className="text-lg text-lg uppercase text-primary flex items-center cursor-pointer"><span className="text-sm"><FaAngleDown /></span>How much can I borrow and for what specific uses?</h3></div>
           <Collapse isOpened={q1} springConfig={{stiffness: 150, damping: 30}}>
-          <p>The maximum amount you can borrow will depend on your program.{faq.costOfLiving && <span> You can finance your tuition and cost of living expenses.</span>}</p>
+          <p>The maximum amount you can borrow will depend on your program.{faqs.costOfLiving&& <span> You can finance your tuition and cost of living expenses.</span>}</p>
                <ul className="mb-0 pb-4">
-                    {faq.loanRange.map(program => {
+                    {faqs.loanRange.map(program => {
                          return <li>
-                              <strong>For {program.programName},</strong> you may borrow from $2,000 up to {program.maxAmount} for tuition. {program.col ? <span>You may also borrow up to {program.colAmount} for cost of living.</span> : <span>Cost of living is not available for this program.</span>}
+                              <strong>For {program.programName},</strong> you may borrow from $2,000 up to {program.maxAmount} for tuition. {program.col ? <span>You may also borrow up to {program.colAmount} for cost of living.</span> : null}
                          </li>
                     })}
                </ul>
-               {faq.costOfLiving && <p className="mb-0 pb-4"><strong>Please note:</strong> In order to finance cost of living, borrow at least $2,000 in tuition financing. You will pay your cash deposit directly to <strong>{schoolName}</strong>.</p>}
+               {faqs.costOfLiving && <p className="mb-0 pb-4"><strong>Please note:</strong> In order to finance cost of living, borrow at least $2,000 in tuition financing. You will pay your cash deposit directly to <strong>{data.school.schoolname}</strong>.</p>}
           </Collapse>
           
-          {faq.costOfLiving &&
+          {faqs.costOfLiving &&
                <>
                <div onClick={() => showq2(!q2)}><h3 className="text-lg uppercase text-primary flex items-center cursor-pointer"><span className="text-sm"><FaAngleDown /></span>when will i receive my living stipend?</h3></div>
                <Collapse isOpened={q2} springConfig={{stiffness: 150, damping: 30}}>
                          
-                         {faq.costOfLivingPrograms && <p><strong>Only the {faq.costOfLivingPrograms} {faq.multCostOfLivingPrograms ? <span>are</span>: <span>is</span>} eligible for cost of living.</strong></p>}
+                         {faqs.costOfLivingPrograms && <p><strong>Only the {faqs.costOfLivingPrograms} {faqs.multCostOfLivingPrograms ? <span>are</span>: <span>is</span>} eligible for cost of living.</strong></p>}
 
                          <p>Your lump sum living stipend will be sent to you on the second Wednesday after your program start. You can elect to have your cost of living disbursed via electronic funds transfer or mailed directly to the address provided in their loan application.</p>
                          <p className="mb-0 pb-4">Please allow 1 - 5 business days for your electronic funds transfer to be reflected in your bank account. For all students who elect to have funds mailed to their address, please allow 5 - 10 business days for your check to arrive via U.S. Standard Mail.</p>
@@ -52,9 +86,9 @@ const FAQ = () => {
           <div onClick={() => showq3(!q3)}><h3 className="text-lg uppercase text-primary flex items-center cursor-pointer"><span className="text-sm"><FaAngleDown /></span>how and when will i repay my loan?</h3></div>
                <Collapse isOpened={q3} springConfig={{stiffness: 150, damping: 30}}>
                     <p>Upon loan acceptance, we will provide you with several options for making payments, including automated payments. You may create an account at <a href="https://www.aspireservicingcenter.com/" target="_blank" rel="noreferrer noopener" className="text-primary">AspireServicingCenter.com</a> at any time to manage payments and account balance.</p>
-                    {faq.interestOnly && <p><strong>Interest-Only Loans: </strong>You will start paying interest on your loan roughly one month after your loan is disbursed to the school. Disbursement occurs on the second Wednesday after program start. You will make interest-only payments while in program and for 60 days following program completion.</p>}
-                    {faq.interestOnly && <p>You will start making full monthly payments (interest plus principal) after your two-month grace period ends. This 60-day payment grace period helps you to keep your eye on finding the right job following program completion.</p>}
-                    {faq.immediateRepayment && <p><strong>Immediate Repayment Loans: </strong>You will start making full monthly payments (interest plus principal) roughly one month after your loan is disbursed to your school. Disbursement occurs on the second Wednesday after program start.</p>}
+                    {faqs.interestOnly && <p><strong>Interest-Only Loans: </strong>You will start paying interest on your loan roughly one month after your loan is disbursed to the school. Disbursement occurs on the second Wednesday after program start. You will make interest-only payments while in program and for 60 days following program completion.</p>}
+                    {faqs.interestOnly && <p>You will start making full monthly payments (interest plus principal) after your two-month grace period ends. This 60-day payment grace period helps you to keep your eye on finding the right job following program completion.</p>}
+                    {faqs.immediateRepayment && <p><strong>Immediate Repayment Loans: </strong>You will start making full monthly payments (interest plus principal) roughly one month after your loan is disbursed to your school. Disbursement occurs on the second Wednesday after program start.</p>}
                     <p className="mb-0 pb-4">There is no prepayment penalty with a Skills Fund loan.</p>
                </Collapse>
 
@@ -62,15 +96,15 @@ const FAQ = () => {
           <div onClick={() => showq4(!q4)}><h3 className="text-lg uppercase text-primary flex items-center cursor-pointer"><span className="text-sm"><FaAngleDown /></span>what is the deferment period?</h3></div>
                <Collapse isOpened={q4} springConfig={{stiffness: 150, damping: 30}}>
                     <p className="mb-0 pb-4">The deferment period is defined as the time you are attending the course, plus an additional two months after program completion. These additional two months are considered your grace period.</p>
-                    {faq.interestOnly && <p className="mb-0 pb-4"><strong>Interest-Only Loans: </strong>Interest-only payments are required during the deferment period. After the deferment period ends, payments of interest and principal are required. Paying interest on your loan during the deferment period will result in lower interest + principal payments during the full loan repayment phase of 36{faq.multipleLoanLengths && <span> or 60</span>} months.</p>}
-                    {faq.immediateRepayment && <p className="mb-0 pb-4"><strong>Immediate Repayment Loans: </strong>These loans have no deferment period. You will start making full monthly payments (interest plus principal) roughly one month after your loan is disbursed to your school. Disbursement occurs on the second Wednesday after program start.</p>}
+                    {faqs.interestOnly && <p className="mb-0 pb-4"><strong>Interest-Only Loans: </strong>Interest-only payments are required during the deferment period. After the deferment period ends, payments of interest and principal are required. Paying interest on your loan during the deferment period will result in lower interest + principal payments during the full loan repayment phase of 36{faqs.multipleLoanLengths && <span> or 60</span>} months.</p>}
+                    {faqs.immediateRepayment && <p className="mb-0 pb-4"><strong>Immediate Repayment Loans: </strong>These loans have no deferment period. You will start making full monthly payments (interest plus principal) roughly one month after your loan is disbursed to your school. Disbursement occurs on the second Wednesday after program start.</p>}
                </Collapse>
           
           <div onClick={() => showq5(!q5)}><h3 className="text-lg uppercase text-primary flex items-center cursor-pointer"><span className="text-sm"><FaAngleDown /></span>how much are interest payments during the deferment period?</h3></div>
                <Collapse isOpened={q5} springConfig={{stiffness: 150, damping: 30}}>
                     <p>The interest-only payments depend on how much you borrow; the less you borrow, the less you will pay.</p>
-                    <p><strong>For a 36-month $10,000 loan:</strong> The interest rate is fixed at {faq.interestRate36} / {faq.APR36} estimated APR. The interest-only monthly payment is approximately {faq.IOPayment36}.</p>
-                    {faq.multipleLoanLengths && <p><strong>For a 60-month $10,000 loan:</strong> The interest rate is fixed at {faq.interestRate60} / {faq.APR60} estimated APR. The interest-only monthly payment is approximately {faq.IOPayment60}.</p>}
+                    <p><strong>For a 36-month $10,000 loan:</strong> The interest rate is fixed at {faqs.interestRate36} / {faqs.APR36} estimated APR. The interest-only monthly payment is approximately {faqs.IOPayment36}.</p>
+                    {faqs.multipleLoanLengths && <p><strong>For a 60-month $10,000 loan:</strong> The interest rate is fixed at {faqs.interestRate60} / {faqs.APR60} estimated APR. The interest-only monthly payment is approximately {faqs.IOPayment60}.</p>}
                     <p>Please see terms in "Term Details" above.</p>
                     <p className="mb-0 pb-4"><strong>Please note:</strong> The Annual Percentage Rate (APR) is estimated and may change slightly based on the loan type, origination fee, and approximate program length. To learn how an Annual Percentage Rate (APR) is calculated, <a className="text-primary" target="_blank" href="https://skills.fund/resources/how-is-an-apr-calculated" rel="noreferrer noopener">visit our blog.</a></p>
                </Collapse>

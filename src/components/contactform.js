@@ -1,5 +1,4 @@
 import React from 'react'
-import { schoolName } from '../constants/programInfo'
  
 const encode = (data) => {
     return Object.keys(data)
@@ -14,7 +13,7 @@ class ContactForm extends React.Component {
         email: "",
         identity: "",
         name: "",
-        school: schoolName,
+        school: this.props.schoolName,
         other: "",
         otherDescription: "",
         thankyou: false,

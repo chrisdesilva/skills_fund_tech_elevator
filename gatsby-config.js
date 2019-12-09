@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Skills Fund`,
@@ -23,6 +27,13 @@ module.exports = {
     `gatsby-plugin-postcss`,
     {
       resolve: 'gatsby-plugin-zopfli'
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: process.env.GATSBY_CONTENTFUL_SPACE_ID,
+        accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
+      },
     },
     // {
     //   resolve: `gatsby-plugin-google-gtag`,

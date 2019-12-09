@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
 import Homepage from '../components/homepage'
-import ReactGA from 'react-ga'
 import ReactPixel from 'react-facebook-pixel'
-import { GATracking, netlifyFormName, schoolName, schoolURL } from '../constants/programInfo'
-
-
-// ReactGA.initialize(GATracking, {
-//   debug: false,
-//   titleCase: false,
-//   gaOptions: {
-//     siteSpeedSampleRate: 100,
-//     cookieDomain: 'auto'
-//   }
-// })
 
 const IndexPage = () => {
+
+  const data = useStaticQuery(graphql`
+    query {
+      school: contentfulSchool(schoolname: {eq: "Tech Elevator"}) {
+        schoolurl
+        skfUrl
+        netlifyFormName
+        schoolname
+        applicationsLive
+        disabledLoanAppFormId
+      }
+    }
+  `)
+
+  const school = data.school
 
   const [IP, setIP] = useState('')
 
@@ -34,7 +38,7 @@ const IndexPage = () => {
   
   return (
     <div>
-      <form name={netlifyFormName} data-netlify='true' netlify-honeypot='bot-field' hidden>
+      <form name={school.netlifyFormName} data-netlify='true' netlify-honeypot='bot-field' hidden>
         <input type='text' name='name' />
         <input type='email' name='email' />
         <input type='text' name='school'/>
@@ -45,10 +49,12 @@ const IndexPage = () => {
         <textarea name='comments' />
       </form>
       <Homepage 
-        formName={netlifyFormName}
+        formName={school.netlifyFormName}
         IP={IP}
-        pageUri={schoolURL}
-        schoolName={schoolName}
+        pageUri={school.schoolurl}
+        schoolName={school.schoolname}
+        applicationsLive={school.applicationsLive}
+        disabledForm={school.disabledLoanAppFormId}
       />
     </div>
   )

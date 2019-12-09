@@ -1,5 +1,4 @@
 import React from 'react'
-// import ReactGA from 'react-ga'
 import { UnmountClosed as Collapse } from 'react-collapse'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
@@ -17,7 +16,6 @@ import TermInfo from './terminfo'
 import FAQ from './faq'
 import Eligibility from './eligibility'
 import ContactForm from './contactform'
-import { applicationsLive } from '../constants/programInfo'
 
 
 class Homepage extends React.Component {
@@ -95,7 +93,7 @@ class Homepage extends React.Component {
               schoolName={this.props.schoolName}
             />
             <LoanCalculator />
-            {applicationsLive ?
+            {this.props.applicationsLive ?
               <LoanApp 
                 ref={this.apply}
                 IP={this.props.IP}
@@ -108,6 +106,7 @@ class Homepage extends React.Component {
                 IP={this.props.IP}
                 pageUri={this.props.pageUri}
                 schoolName={this.props.schoolName}
+                disabledLoanAppFormID={this.props.disabledForm}
               />
             }
             <Reviews />
