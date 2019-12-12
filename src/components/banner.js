@@ -8,20 +8,18 @@ const Banner = props => {
             school: contentfulSchool(schoolname: {eq: "Tech Elevator"}) {
                 applicationsLive
                 bannerText {
-                    content {
-                      content {
-                        value
-                      }
-                    }
+                    bannerText
                 }
             }
         }
     `)
+
+    const bannerText = data.school.bannerText.bannerText.split("-")
     return (
     <div className='flex flex-col justify-center items-center relative z-0' id='banner'>
         {/* update h2 caps words with school-specific content */}
-        <h1 className='text-3xl lg:text-4xl font-normal text-center mt-8 text-black px-4'>{data.school.bannerText.content[0].content[0].value}</h1>
-        <h2 className='text-base lg:text-xl font-light text-center text-black'>{data.school.bannerText.content[1].content[0].value}</h2>
+        <h1 className='text-3xl lg:text-4xl font-normal text-center mt-8 text-black px-4'>{bannerText[0]}</h1>
+        <h2 className='text-base lg:text-xl font-light text-center text-black'>{bannerText[1]}</h2>
         <div className='flex flex-col lg:flex-row pb-16'>
             <Button
                 buttonClassName='opacityApply uppercase bg-primary p-3 lg:mb-0 w-40 rounded-full shadow-lg text-white'
