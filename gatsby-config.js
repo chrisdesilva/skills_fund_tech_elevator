@@ -28,24 +28,6 @@ module.exports = {
 		{
 			resolve: 'gatsby-plugin-zopfli'
 		},
-		// {
-		//   resolve: `gatsby-source-contentful`,
-		//   options: {
-		//     spaceId: process.env.GATSBY_CONTENTFUL_SPACE_ID,
-		//     accessToken: process.env.GATSBY_CONTENTFUL_ACCESS_TOKEN,
-		//   },
-		// },
-		// {
-		//   resolve: `gatsby-plugin-google-gtag`,
-		//   options: {
-		//     trackingIds: [
-		//       "UA-68312423-1"
-		//     ],
-		//     gtagConfig: {
-		//       cookie_domain: "auto"
-		//     }
-		//   }
-		// },
 		{
 			resolve: `gatsby-plugin-manifest`,
 			options: {
