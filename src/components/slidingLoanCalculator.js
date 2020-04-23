@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react"
 import LoanCalcPaymentTable from "./loancalcpaymenttable"
-import Image from "../components/image"
+import Image from "./image"
 import {
   defaultLoanAmount,
   faq,
@@ -10,8 +10,10 @@ import {
 } from "../constants/programInfo"
 
 const SlidingLoanCalculator = props => {
-  const [metroIndex, setMetroIndex] = useState(0)
   const [programIndex, setProgramIndex] = useState(0)
+  const [metroAmount, setMetroAmount] = useState(
+    programLoanInfo[programIndex]["metros"][0]["loanInfo"]["maxLoanAmt"]
+  )
   const [loanValue, setLoanValue] = useState(
     programLoanInfo[programIndex]["loanInfo"]["maxLoanAmt"]
   )
@@ -121,7 +123,8 @@ const SlidingLoanCalculator = props => {
   }
 
   const handleMetro = e => {
-    setMetroIndex(Number(e.target.value))
+    setMetroAmount(Number(e.target.value))
+    setProgramMax(Number(e.target.value))
   }
 
   useEffect(() => {
@@ -138,22 +141,22 @@ const SlidingLoanCalculator = props => {
     calculateMonthlyPayment() // run calculator when page loads to show initial amounts
     // setLoanType(programLoanInfo[programIndex][loanTypes]);
     hasMultiMetros(programLoanInfo[programIndex]["showMetros"])
+    setMetros(programLoanInfo[programIndex]["metros"])
     setShowLoanTypes(programLoanInfo[programIndex]["showLoanTypes"])
     setLoanInformation(programLoanInfo[programIndex]["loanInfo"])
+    setMetroAmount(
+      programLoanInfo[programIndex]["metros"][0]["loanInfo"]["maxLoanAmt"]
+    )
 
     // check to see if the program has multiple locations and set the program max based on individual cities
     if (programLoanInfo[programIndex]["showMetros"]) {
-      setProgramMax(
-        programLoanInfo[programIndex]["metros"][metroIndex]["loanInfo"][
-          "maxLoanAmt"
-        ]
-      )
+      setProgramMax(metroAmount)
     } else {
       setProgramMax(programLoanInfo[programIndex]["loanInfo"]["maxLoanAmt"])
     }
 
     setLoanValue(programLoanInfo[programIndex]["loanInfo"]["maxLoanAmt"])
-  }, [metroIndex, programIndex, programMax, loanType])
+  }, [programIndex, programMax, loanType])
 
   useEffect(() => {
     calculateTotalPayment()
@@ -247,8 +250,13 @@ const SlidingLoanCalculator = props => {
               className={multiMetros ? "loanCalculator__selectInput" : "hide"}
             >
               <select defaultValue={"default"} onChange={handleMetro}>
+                <option>---</option>
                 {metros.map((city, i) => (
-                  <option label={city.location} key={city.location} value={i}>
+                  <option
+                    label={city.location}
+                    key={city.location}
+                    value={city.loanInfo.maxLoanAmt}
+                  >
                     {city.location}
                   </option>
                 ))}
