@@ -143,7 +143,7 @@ export const programLoanInfo = [
     url: "https://my.skills.fund/application?lenderCode=SFTE17A",
     loanInfo: {
       // match loanInfo in first metro below
-      maxLoanAmt: 19625,
+      maxLoanAmt: 19500,
       loanTerm36: true,
       loanTerm60: true,
       "Interest Only": {
@@ -165,7 +165,7 @@ export const programLoanInfo = [
         location: "Metro 1",
         loanInfo: {
           // // match loanInfo to Program 1 above
-          maxLoanAmt: 19625,
+          maxLoanAmt: 19500,
           loanTerm36: true,
           loanTerm60: true,
           "Interest Only": {
@@ -211,7 +211,7 @@ export const programLoanInfo = [
     url: "https://my.skills.fund/application?lenderCode=SFTERP20",
     loanInfo: {
       // match loanInfo in first metro below
-      maxLoanAmt: 19500,
+      maxLoanAmt: 19625,
       loanTerm36: true,
       loanTerm60: true,
       "Interest Only": {
@@ -233,7 +233,7 @@ export const programLoanInfo = [
         location: "Metro 1",
         loanInfo: {
           // // match loanInfo to Program 1 above
-          maxLoanAmt: 19500,
+          maxLoanAmt: 19625,
           loanTerm36: true,
           loanTerm60: true,
           "Interest Only": {
