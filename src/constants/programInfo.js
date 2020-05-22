@@ -51,12 +51,12 @@ export const faq = {
   // faq section
   costOfLiving: true, // true if at least one program has cost of living included
   costOfLivingPrograms: "", // leave as empty string is cost of living availability is the same across all programs
-  multCostOfLivingPrograms: false, // true if costOfLivingPrograms string has more than one program
+  multCostOfLivingPrograms: true, // true if costOfLivingPrograms string has more than one program
   interestOnly: true, // true if interest-only payments are an option
   immediateRepayment: false, // true if immediate repayment is an option
   multipleLoanLengths: true, // true if 36 and 60 month options are both available
   multipleLoanTypes: false, // true if both IR and IO are available
-  multiPrograms: false, // only true if there are multiple programs
+  multiPrograms: true, // only true if there are multiple programs
   onlinePrograms: false, // true if at least one program is remote/online
   schoolHQState: "WA",
   origFee: 0.05,
@@ -74,6 +74,12 @@ export const faq = {
     {
       programName: "Tech Elevator's program",
       maxAmount: "$15,500",
+      col: true,
+      colAmount: "$4,000",
+    },
+    {
+      programName: "Tech Elevator's Remote Program",
+      maxAmount: "$15,625",
       col: true,
       colAmount: "$4,000",
     },
@@ -135,6 +141,74 @@ export const programLoanInfo = [
   {
     name: "Coding Bootcamp",
     url: "https://my.skills.fund/application?lenderCode=SFTE17A",
+    loanInfo: {
+      // match loanInfo in first metro below
+      maxLoanAmt: 19625,
+      loanTerm36: true,
+      loanTerm60: true,
+      "Interest Only": {
+        // interest-only
+        k: 6,
+        apr36: 11.59,
+        apr60: 12.84,
+      },
+      "Immediate Repayment": null, // immediate repayment
+    },
+    defaultLoanType: "Interest Only", // leave at 0 for interest-only, set to 1 for immediate repayment
+    showMetros: false, // true if there are multiple metros with different tuition amounts for the same program
+    showLoanTypes: false, // true if both IR and IO are available
+    loanTypes: ["Interest Only"],
+    locations: ["Metro 1", "Metro 2", "Metro 3"],
+    metros: [
+      // list in same order as locations array above
+      {
+        location: "Metro 1",
+        loanInfo: {
+          // // match loanInfo to Program 1 above
+          maxLoanAmt: 19625,
+          loanTerm36: true,
+          loanTerm60: true,
+          "Interest Only": {
+            k: 6,
+            apr36: 11.59,
+            apr60: 12.84,
+          },
+          "Immediate Repayment": null,
+        },
+      },
+      {
+        location: "Metro 2",
+        loanInfo: {
+          maxLoanAmt: 15545,
+          loanTerm36: true,
+          loanTerm60: true,
+          "Interest Only": {
+            k: 6,
+            apr36: 11.59,
+            apr60: 12.84,
+          },
+          "Immediate Repayment": null,
+        },
+      },
+      {
+        location: "Metro 3",
+        loanInfo: {
+          maxLoanAmt: 20545,
+          loanTerm36: true,
+          loanTerm60: true,
+          "Interest Only": {
+            k: 6,
+            apr36: 11.59,
+            apr60: 12.84,
+          },
+          "Immediate Repayment": null,
+        },
+      },
+    ],
+  },
+  {
+    name: "Remote Program",
+    url: "https://my.skills.fund/application?lenderCode=SFTERP20",
     loanInfo: {
       // match loanInfo in first metro below
       maxLoanAmt: 19500,
