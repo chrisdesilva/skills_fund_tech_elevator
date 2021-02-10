@@ -139,7 +139,7 @@ export const faq = {
     },
     {
       programName: "Tech Elevator's Remote Program",
-      maxAmount: "$15,625",
+      maxAmount: "$15,500",
       col: true,
       colAmount: "$4,000",
     },
